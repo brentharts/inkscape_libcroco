@@ -690,8 +690,6 @@ property (CRDocHandler * a_this,
                 decl2 = cr_declaration_append
                         (ctxt->cur_stmt->kind.ruleset->decl_list, decl);
                 if (!decl2) {
-                        cr_declaration_destroy (decl);
-                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;
@@ -706,8 +704,6 @@ property (CRDocHandler * a_this,
                         (ctxt->cur_stmt->kind.font_face_rule->decl_list,
                          decl);
                 if (!decl2) {
-                        cr_declaration_destroy (decl);
-                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;
@@ -720,8 +716,6 @@ property (CRDocHandler * a_this,
                 decl2 = cr_declaration_append
                         (ctxt->cur_stmt->kind.page_rule->decl_list, decl);
                 if (!decl2) {
-                        cr_declaration_destroy (decl);
-                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;
