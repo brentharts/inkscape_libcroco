@@ -28,7 +28,7 @@ returns returns the value FALSE to say that the current xml node
 is matched by the CSS2 selection expression being evaluated.
 
 Note that during the evaluation of a CSS2 selection expression,
-all the contextual information are stored into an evalutation context.
+all the contextual information are stored into an evaluation context.
 For example, the context will hold a pointer to the xml node the
 selection engine is trying to match.
 

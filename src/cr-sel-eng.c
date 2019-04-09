@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
  *
- * See  COPYRIGHTS file for copyright informations.
+ * See  COPYRIGHTS file for copyright information.
  */
 
 #include <string.h>
@@ -296,7 +296,7 @@ id_add_sel_matches_node (CRAdditionalSel * a_add_sel, xmlNode * a_node)
  *Returns TRUE if the instance of #CRAdditional selector matches
  *the node given in parameter, FALSE otherwise.
  *@param a_add_sel the additional selector to evaluate.
- *@param a_node the xml node against whitch the selector is to
+ *@param a_node the xml node against which the selector is to
  *be evaluated
  *return TRUE if the additional selector matches the current xml node
  *FALSE otherwise.
@@ -524,7 +524,7 @@ additional_selector_matches_node (CRSelEng * a_this,
                            && cur_add_sel->content.attr_sel) {
                         /*
                          *here, call a function that does the match
-                         *against an attribute additionnal selector
+                         *against an attribute additional selector
                          *and an xml node.
                          */
                         if (attr_add_sel_matches_node (cur_add_sel, a_node)
@@ -858,7 +858,7 @@ cr_sel_eng_get_matched_rulesets_real (CRSelEng * a_this,
              (PRIVATE (a_this)->cur_stmt = cur_stmt);
              cur_stmt = cur_stmt->next) {
                 /*
-                 *initialyze the selector list in which we will
+                 *initialize the selector list in which we will
                  *really perform the search.
                  */
                 sel_list = NULL;
@@ -1032,7 +1032,7 @@ put_css_properties_in_props_list (CRPropList ** a_props, CRStatement * a_stmt)
                         /*
                          *if the already selected declaration
                          *is marked as being !important the current
-                         *declaration must not overide it 
+                         *declaration must not override it 
                          *(unless the already selected declaration 
                          *has an UA origin)
                          */
@@ -1232,7 +1232,7 @@ cr_sel_eng_unregister_pseudo_class_sel_handler (CRSelEng * a_this,
  *Unregisters all the pseudo class sel handlers
  *and frees all the associated allocated datastructures.
  *
- *Returns CR_OK upon succesful completion, an error code
+ *Returns CR_OK upon successful completion, an error code
  *otherwise.
  */
 enum CRStatus
@@ -1303,7 +1303,7 @@ cr_sel_eng_get_pseudo_class_selector_handler (CRSelEng * a_this,
  *is considered if and only if this functions returns CR_OK.
  *
  *Evaluates a chained list of simple selectors (known as a css2 selector).
- *Says wheter if this selector matches the xml node given in parameter or
+ *Says whether if this selector matches the xml node given in parameter or
  *not.
  *
  *Returns the CR_OK if the selection ran correctly, an error code otherwise.
@@ -1330,7 +1330,7 @@ cr_sel_eng_matches_node (CRSelEng * a_this, CRSimpleSel * a_sel,
  * cr_sel_eng_get_matched_rulesets:
  *@a_this: the current instance of the selection engine.
  *@a_sheet: the stylesheet that holds the selectors.
- *@a_node: the xml node to consider during the walk thru
+ *@a_node: the xml node to consider during the walk through
  *the stylesheet.
  *@a_rulesets: out parameter. A pointer to an array of
  *rulesets statement pointers. *a_rulesets is allocated by
@@ -1342,7 +1342,7 @@ cr_sel_eng_matches_node (CRSelEng * a_this, CRSimpleSel * a_sel,
  *Returns an array of pointers to selectors that matches
  *the xml node given in parameter.
  *
- *Returns CR_OK upon sucessfull completion, an error code otherwise.
+ *Returns CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus
 cr_sel_eng_get_matched_rulesets (CRSelEng * a_this,

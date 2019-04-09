@@ -1,6 +1,6 @@
 #!/bin/sh
 #This is just a smallish indent script to indent mlview
-#to indent all the sources correctly (before commiting for ex),
+#to indent all the sources correctly (before committing for ex),
 #type: 
 #./indent-mlview src/*.[ch]
 

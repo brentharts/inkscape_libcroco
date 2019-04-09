@@ -132,7 +132,7 @@ parse_command_line (int a_argc, char **a_argv, struct Options *a_options)
  *cr_input_read_byte() method. Each byte is send to
  *stdout.
  *@param a_file_uri the file to read.
- *@return CR_OK upon successfull completion of the
+ *@return CR_OK upon successful completion of the
  *function, an error code otherwise.
  */
 static enum CRStatus

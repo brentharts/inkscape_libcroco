@@ -42,4 +42,4 @@ Finish the design of the instruction set of the selection engine.
 	The draft design is in the file 
 	docs/designs/docs/design/sel-instr.txt.
 
-Write a litte doc about how to use the parser as it is today.
+Write a little doc about how to use the parser as it is today.

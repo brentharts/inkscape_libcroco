@@ -53,7 +53,7 @@ struct MyFooContext
 } ;
 
 /**
- *This callback is called only once, at the begining of
+ *This callback is called only once, at the beginning of
  *the CSS Document.
  *So here, we will allocate a custom parsing context
  *where we will store data necessary for us to
@@ -78,7 +78,7 @@ start_document_cb (CRDocHandler *a_handler)
                  *the system ran out of memory. Advertise it and
                  *stop the program.
                  */
-                fprintf (stderr, "progam ran out of memory") ;
+                fprintf (stderr, "program ran out of memory") ;
                 exit (-1) ;
         }
 
@@ -99,7 +99,7 @@ start_document_cb (CRDocHandler *a_handler)
 
 /**
  *This callback function will
- *be called at the begining of each css ruleset.
+ *be called at the beginning of each css ruleset.
  *@param a_handler a pointer to the current sac
  *document handler
  *@param a_selector a pointer to the selector.
@@ -263,7 +263,7 @@ main (int argc, char **argv)
 	file_path = (unsigned char*)argv[i] ;
 	
 	/*
-	 *Instanciate the libcroco parser.
+	 *Instantiate the libcroco parser.
 	 */
 	parser = cr_parser_new_from_file (file_path,
 					  CR_ASCII) ;
@@ -276,7 +276,7 @@ main (int argc, char **argv)
 	}
 
 	/*
-	 *Instanciates the SAC document handler.
+	 *Instantiates the SAC document handler.
 	 */
 	sac_handler = cr_doc_handler_new () ;
 	if (!sac_handler)

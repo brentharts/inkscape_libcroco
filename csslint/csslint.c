@@ -157,7 +157,7 @@ parse_cmd_line (int a_argc, char **a_argv, struct Options *a_options)
                                         i++;
                                         if (i >= a_argc
                                             || a_argv[i][0] == '-') {
-                                                g_print ("--xpath should be followed by an xpath expresion\n");
+                                                g_print ("--xpath should be followed by an xpath expression\n");
                                                 display_usage ();
                                                 exit (-1);
                                         }
@@ -236,7 +236,7 @@ display_usage (void)
  *cr_input_read_byte() method. Each byte is send to
  *stdout.
  *@param a_file_uri the file to read.
- *@return CR_OK upon successfull completion of the
+ *@return CR_OK upon successful completion of the
  *function, an error code otherwise.
  */
 static enum CRStatus
@@ -363,21 +363,21 @@ evaluate_selectors (gchar * a_xml_path,
           cr_stylesheet_unref (ua_sheet);
 
         if (!cascade) {
-                g_printerr ("Could not instanciate the cascade\n");
+                g_printerr ("Could not instantiate the cascade\n");
                 status = CR_ERROR;
                 goto end;
         }
         sel_eng = cr_sel_eng_new ();
         if (!sel_eng) {
                 g_printerr
-                        ("Error: Could not instanciate the selection engine\n");
+                        ("Error: Could not instantiate the selection engine\n");
                 status = CR_ERROR;
                 goto end;
         }
         xpath_context = xmlXPathNewContext (xml_doc);
         if (!xpath_context) {
                 g_printerr
-                        ("Error: Could not instanciate the xpath context\n");
+                        ("Error: Could not instantiate the xpath context\n");
                 status = CR_ERROR;
                 goto end;
         }
@@ -442,7 +442,7 @@ start_document (CRDocHandler * a_this)
 
         context = g_try_malloc (sizeof (struct SacContext));
         if (!context) {
-                cr_utils_trace_info ("instanciation of sac context failed");
+                cr_utils_trace_info ("instantiation of sac context failed");
                 return;
         }
         cr_doc_handler_set_ctxt (a_this, context);
@@ -547,7 +547,7 @@ import_style (CRDocHandler *a_this,
         str = cr_parsing_location_to_string (a_location, 0) ;
         if (str) {
                 g_print ("/*****************************************************\n") ;
-                g_print (" *Parsing location inforamtion for the @import rule\n") ;
+                g_print (" *Parsing location information for the @import rule\n") ;
                 g_print (" ******************************************************/\n\n") ;
                 g_print ("  /*@import*/\n") ;
                 g_print ("  /*%s*/\n\n", str) ;
@@ -703,7 +703,7 @@ start_page (CRDocHandler *a_this,
                 str = NULL ;
         }
         /*************************************
-         *print parsing location informations
+         *print parsing location information
          ************************************/
         g_print ("\n\n  /*@page*/\n") ;
         if (a_location)
@@ -933,12 +933,12 @@ sac_parse_and_display_locations (guchar * a_file_uri)
 
         parser = cr_parser_new_from_file (a_file_uri, CR_UTF_8);
         if (!parser) {
-                cr_utils_trace_info ("parser instanciation failed");
+                cr_utils_trace_info ("parser instantiation failed");
                 return CR_ERROR;
         }
         sac_handler = cr_doc_handler_new ();
         if (!sac_handler) {
-                cr_utils_trace_info ("sac handler instanciation failed");
+                cr_utils_trace_info ("sac handler instantiation failed");
                 status = CR_OUT_OF_MEMORY_ERROR;
                 goto cleanup;
         }

@@ -14,7 +14,7 @@ Please, make sure you read these documents before you read this one.
 I) General coding style rules
 ---------------------------
 
-Coding style refers to the way the code is formated.
+Coding style refers to the way the code is formatted.
 Here are the guidelines we use in this project:
 
 Indentation Style
@@ -59,7 +59,7 @@ int my_FunctionName (char Blabla) {
 
 The words of the function names are separared by an underscore ('_') and
 are written in lower case.
-The name functions arguments allways start with by a "a_" .
+The name functions arguments always start with by a "a_" .
 
 Avoid for instance the Java function (method) name scheme by mixing
 upper and lower case in the function names.

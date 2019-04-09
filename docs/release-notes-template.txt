@@ -17,7 +17,7 @@ It provides :
 
 Changes
 =======
-- Removed the pango dependancy from the 
+- Removed the pango dependency from the 
   selection engine and put it in the layout engine. (Dodji Seketeli)
 - Added a test example to demonstrate the use of the selection engine (Stefan Seefeld)
 

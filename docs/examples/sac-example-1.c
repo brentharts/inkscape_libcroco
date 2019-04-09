@@ -28,7 +28,7 @@
 
 /**
  *This is a callback function that will
- *be called at the begining of each css ruleset.
+ *be called at the beginning of each css ruleset.
  *@param a_handler a pointer to the current sac
  *document handler
  *@param a_selector a pointer to the selector.
@@ -39,7 +39,7 @@ start_selector_cb (CRDocHandler *a_handler,
 		   CRSelector *a_selector)
 {
 	printf ("==========================================\n") ;
-	printf ("Hey, this is the begining of a ruleset\n") ;
+	printf ("Hey, this is the beginning of a ruleset\n") ;
 }
 
 /**
@@ -128,7 +128,7 @@ main (int argc, char **argv)
 	file_path = (unsigned char*)argv[i] ;
 	
 	/*
-	 *Instanciate the libcroco parser.
+	 *Instantiate the libcroco parser.
 	 */
 	parser = cr_parser_new_from_file (file_path,
 					  CR_ASCII) ;
@@ -141,7 +141,7 @@ main (int argc, char **argv)
 	}
 
 	/*
-	 *Instanciates the SAC document handler.
+	 *Instantiates the SAC document handler.
 	 */
 	sac_handler = cr_doc_handler_new () ;
 	if (!sac_handler)
@@ -183,7 +183,7 @@ main (int argc, char **argv)
 	cr_parser_parse (parser) ;
 	
 	/*******************************************************
-	 *End of the parsing. A lot of sentences begining with "Hey"
+	 *End of the parsing. A lot of sentences beginning with "Hey"
 	 *may have been printed on the screen...
 	 ***********************************************/
 

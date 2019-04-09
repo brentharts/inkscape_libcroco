@@ -20,7 +20,7 @@
  * USA
  *
  * Author: Dodji Seketeli.
- * see COPYRIGTHS file for copyright information
+ * see COPYRIGHTS file for copyright information
  */
 
 #include <string.h>
@@ -36,7 +36,7 @@
  *Each supported css property has an ID which is
  *an entry into a property "population" jump table.
  *each entry of the property population jump table
- *contains code to tranform the literal form of
+ *contains code to transform the literal form of
  *a property value into a strongly typed value.
  */
 enum CRPropertyID {
@@ -148,7 +148,7 @@ static CRPropertyDesc gv_prop_table[] = {
 /**
  *A the key/value pair of this hash table
  *are:
- *key => name of the the css propertie found in gv_prop_table
+ *key => name of the css property found in gv_prop_table
  *value => matching property id found in gv_prop_table.
  *So this hash table is here just to retrieval of a property id
  *from a property name.
@@ -1076,7 +1076,7 @@ set_prop_background_color (CRStyle * a_style, CRTerm * a_value)
  *@param a_style the style structure to set.
  *@param a_value the css2 term to take the color information from.
  *@param a_dir the direction (TOP, LEFT, RIGHT, or BOTTOM).
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *@return CR_OK upon successful completion, an error code otherwise.
  */
 static enum CRStatus
 set_prop_border_x_color_from_value (CRStyle * a_style, CRTerm * a_value,
@@ -1734,7 +1734,7 @@ cr_style_new (gboolean a_set_props_to_initial_values)
  *Sets the style properties to their default values according to the css2 spec
  * i.e inherit if the property is inherited, its initial value otherwise.
  *@param a_this the current instance of #CRStyle.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *@return CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus 
 cr_style_set_props_to_default_values (CRStyle * a_this)
@@ -1784,7 +1784,7 @@ cr_style_set_props_to_default_values (CRStyle * a_this)
 		case RGB_PROP_COLOR:
 			/*
                          *REVIEW: color is inherited and the default value is
-			 *ua dependant.
+			 *ua dependent.
                          */
 			cr_rgb_set_to_inherit (&a_this->rgb_props[i].sv,
                                                TRUE) ;
@@ -1836,10 +1836,10 @@ cr_style_set_props_to_default_values (CRStyle * a_this)
  *Sets the style properties to their initial value according to the css2 spec.
  *This function should be used to initialize the style of the root element
  *of an xml tree.
- *Some properties are user agent dependant like font-family, and
+ *Some properties are user agent dependent like font-family, and
  *are not initialized, read the spec to make you renderer compliant.
  *@param a_this the current instance of #CRStyle.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *@return CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus 
 cr_style_set_props_to_initial_values (CRStyle *a_this)
@@ -2006,7 +2006,7 @@ cr_style_resolve_inherited_properties (CRStyle *a_this)
  *value(s)
  *@param a_this the instance of #CRStyle to set.
  *@param a_decl the declaration from which the #CRStyle fields are set.
- *@return CR_OK upon successfull completion, an error code otherwise.
+ *@return CR_OK upon successful completion, an error code otherwise.
  */
 enum CRStatus
 cr_style_set_style_from_decl (CRStyle * a_this, CRDeclaration * a_decl)
@@ -2239,7 +2239,7 @@ cr_style_set_style_from_decl (CRStyle * a_this, CRDeclaration * a_decl)
  *Increases the reference count
  *of the current instance of #CRStyle.
  *@param a_this the current instance of #CRStyle.
- *@return CR_OK upon successfull completion, an error code
+ *@return CR_OK upon successful completion, an error code
  *otherwise.
  */
 enum CRStatus
@@ -2302,11 +2302,11 @@ cr_style_dup (CRStyle * a_this)
 /**
  *Copies a style data structure into another.
  *TODO: this is actually broken because it's based
- *on memcpy although some data stuctures of CRStyle should
+ *on memcpy although some data structures of CRStyle should
  *be properly duplicated.
  *@param a_dest the destination style datastructure
  *@param a_src the source style datastructure.
- *@return CR_OK upon succesfull completion, an error code otherwise
+ *@return CR_OK upon successful completion, an error code otherwise
  */
 enum CRStatus
 cr_style_copy (CRStyle * a_dest, CRStyle * a_src)
@@ -2320,7 +2320,7 @@ cr_style_copy (CRStyle * a_dest, CRStyle * a_src)
 /**
  *dump a CRNumpPropVal in a string.
  *@param a_prop_val the numerical property value to dump
- *@param a_str the string to dump the numerical propertie into.
+ *@param a_str the string to dump the numerical property into.
  *Note that the string value is appended to a_str.
  *@param a_nb_indent the number white chars of indentation.
  */
@@ -2650,7 +2650,7 @@ cr_style_white_space_type_to_string (enum CRWhiteSpaceType a_code,
  *a string
  *@param a_this the instance of #CRStyle to serialize
  *@param a_str the string to serialise the style into.
- *if *a_str is NULL, a new GString is instanciated, otherwise
+ *if *a_str is NULL, a new GString is instantiated, otherwise
  *the style serialisation is appended to the existed *a_str
  *@param the number of white space char to use for indentation.
  *@return CR_OK upon successful completion, an error code otherwise.
@@ -2679,7 +2679,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
                 /*
                  *to_string() the name of the num_prop
                  *(using num_prop_code_to_string)
-                 *before outputing it value
+                 *before outputting it value
                  */
                 cr_utils_dump_n_chars2 (' ', str, indent);
                 tmp_str = (gchar *) num_prop_code_to_string (i);

@@ -61,7 +61,7 @@ source-file: test2-main.c
 purpose: tests the sac api of the parser.
 
 description: it loads the file located at the path given
-in argument, instanciates a sac parser, set document
+in argument, instantiates a sac parser, set document
 handlers and parses the file. 
 The doc handlers simply dump the name name of the callback
 which is being called and some basic additional information.
@@ -75,7 +75,7 @@ source-file: test3-main.c
 purpose: Test the SAC api core css grammar parsing
 
 description: it loads the file located at the path given
-in argument, instanciates a sac parser, set document
+in argument, instantiates a sac parser, set document
 handlers and parses the file using the css2 core  syntax.
 The doc handlers simply dump the name name of the callback
 which is being called and some basic additional information.
@@ -107,7 +107,7 @@ description: parses an in memory xml document hardwired in the
 test5-main.c file; parses the stylesheet given in parameter to
 the test5 binary.
 Walks down the xml document tree and runs the selector engine
-on each xml documument node to get the css rule that matches it.
+on each xml document node to get the css rule that matches it.
 Displays a report that basically say: "this xml node was matched
 by this set of css rules"
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,7 +117,7 @@ binary: test6
 
 source-file: test6-main.c
 
-purpose: tests the "in memory" css2 parsing capabilites. (cr_om_parser_parse_buf)
+purpose: tests the "in memory" css2 parsing capabilities. (cr_om_parser_parse_buf)
 
 
 description: parses an "in memory" hardwired css2 stylesheet

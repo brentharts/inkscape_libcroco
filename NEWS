@@ -73,7 +73,7 @@
                end_selector sac-handler. [Benjamin Dauvergne]
     - #394294: Escape are wrongly computed [Benjamin Dauvergne]
     - #314831: Escapes not recognized [Benjamin Dauvergne]
-    - #395099: overly agressive rule matching [Bruno Haible]
+    - #395099: overly aggressive rule matching [Bruno Haible]
     - #553937: CRDocHandler instances created with reference count of 0
                [Robert Staudinger]
 
@@ -97,7 +97,7 @@
      Enhancements since 0.5.1
      ========================
 
-     - add parsing location to all the CSS contructions at SAC level [Dodji Seketeli]
+     - add parsing location to all the CSS constructions at SAC level [Dodji Seketeli]
      - add --dump-location option to csslint [Dodji Seketeli]
      - enable several API/ABI incompatible versions of Libcroco to be
      installed on the same box [Dodji Seketeli]
@@ -116,7 +116,7 @@
      - #139891: better @media rule reporting [Dodji Seketeli]
      - #140317: fix class sel without class name crash [Dodji Seketeli]
      - #140334: fix an infinite loop in the parser [Dodji Seketeli]
-     - attribute selectors evalution fixes. [Dodji Seketeli]     
+     - attribute selectors evaluation fixes. [Dodji Seketeli]     
      - Better support of descendant selectors evaluation [Dodji Seketeli]
      - Better regression tests framework [Dodji Seketeli]
 
@@ -139,7 +139,7 @@
      - support of CSS3 indentifiers [Dodji Seketeli]
      - better w3c DOM integration support [Rob BUIS, Dodji Seketeli]
      - many parsing fixes [Dodji Seketeli]
-     - style structure debuging facility [Dodji Seketeli]
+     - style structure debugging facility [Dodji Seketeli]
      - better fragment parsing support [Dodji Seketeli]
      - Split libcroco and sewfox [Dodji Seketeli]
      - class selector evaluation fix [Rob BUIS]

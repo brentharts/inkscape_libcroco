@@ -17,7 +17,7 @@ Simplicity
 We want the code to be maintainable by anyone who knows the CSS spec
 and who knows how to code in C. Therefore, we avoid to overuse
 the C preprocessor magic and all the tricks that tend to turn C into
-a maintainance nightmare.
+a maintenance nightmare.
 
 We also try to adhere to the Gnome coding guidelines specified
 at http://developer.gnome.org/doc/guides/programming-guidelines.
@@ -33,7 +33,7 @@ pointers values before dereferencing them for example...
 Conformance
 -----------
 We try to stick to the CSS spec. We know this is almost impossible to achieve
-given the ressources we have but we think it is a sane target to chase.
+given the resources we have but we think it is a sane target to chase.
 
 II) Overall architecture
 =========================
@@ -51,7 +51,7 @@ an utf8-encoded character stream.
 
 Ideally, it should abstract local data sources 
 (local files and in-memory buffers)
-and remote data sources (sockets, url-identified ressources) but for the
+and remote data sources (sockets, url-identified resources) but for the
 moment, it can only abstract local data sources.
 
 Adding a new type of data source should be transparent for the
