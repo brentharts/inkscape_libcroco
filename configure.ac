@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.64)
-AC_INIT([libcroco],[0.6.13],[http://bugzilla.gnome.org/enter_bug.cgi?product=libcroco],[libcroco])
+AC_INIT([libcroco],[0.6.99],[https://gitlab.com/inkscape/libcroco/-/issues],[libcroco])
 AC_CONFIG_SRCDIR([src/cr-input.c])
 AC_CANONICAL_HOST
 
@@ -18,7 +18,7 @@ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 LIBCROCO_MAJOR_VERSION=0
 LIBCROCO_MINOR_VERSION=6
-LIBCROCO_MICRO_VERSION=12
+LIBCROCO_MICRO_VERSION=99
 
 LIBCROCO_CURRENT=3
 LIBCROCO_REVISION=1
