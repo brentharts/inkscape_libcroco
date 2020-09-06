@@ -1,0 +1,13 @@
+image: registry.gitlab.com/inkscape/inkscape-ci-docker/master
+
+libcroco:linux:
+  stage: build
+  before_script:
+    - apt-get update -yqq && apt-get install -y gtk-doc-tools
+    - export PATH="$PATH:$PWD"
+  script:
+    - sh autogen.sh --prefix="$PWD/install_dir"
+    - make
+    - make install
+    - make test
+    - if cat tests/tests-error.log; then false; fi
