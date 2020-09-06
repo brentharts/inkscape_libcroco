@@ -211,6 +211,8 @@ start_font_face (CRDocHandler * a_this,
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
+        (void) a_location;
+
         g_return_if_fail (a_this);
 
         g_return_if_fail (a_this);
@@ -310,6 +312,8 @@ charset (CRDocHandler * a_this, CRString * a_charset,
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
 
+        (void) a_location;
+
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
@@ -343,6 +347,8 @@ start_page (CRDocHandler * a_this,
         enum CRStatus status = CR_OK;
         ParsingContext *ctxt = NULL;
         ParsingContext **ctxtptr = NULL;
+
+        (void) a_location;
 
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
@@ -427,6 +433,8 @@ start_media (CRDocHandler * a_this,
         ParsingContext **ctxtptr = NULL;
         GList *media_list = NULL;
 
+        (void) a_location;
+
         g_return_if_fail (a_this);
 	ctxtptr = &ctxt;
         status = cr_doc_handler_get_ctxt (a_this, (gpointer *) ctxtptr);
@@ -501,6 +509,7 @@ import_style (CRDocHandler * a_this,
         GList *media_list = NULL ;
 
         (void) a_uri_default_ns;
+        (void) a_location;
 
         g_return_if_fail (a_this);
 
@@ -682,6 +691,7 @@ property (CRDocHandler * a_this,
                         (ctxt->cur_stmt->kind.ruleset->decl_list, decl);
                 if (!decl2) {
                         cr_declaration_destroy (decl);
+                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;
@@ -697,6 +707,7 @@ property (CRDocHandler * a_this,
                          decl);
                 if (!decl2) {
                         cr_declaration_destroy (decl);
+                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;
@@ -710,6 +721,7 @@ property (CRDocHandler * a_this,
                         (ctxt->cur_stmt->kind.page_rule->decl_list, decl);
                 if (!decl2) {
                         cr_declaration_destroy (decl);
+                        decl = NULL;
                         cr_utils_trace_info
                                 ("Could not append decl to ruleset");
                         goto error;

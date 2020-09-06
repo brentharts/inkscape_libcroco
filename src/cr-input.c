@@ -404,8 +404,6 @@ cr_input_get_nb_bytes_left (CRInput const * a_this)
 enum CRStatus
 cr_input_read_byte (CRInput * a_this, guchar * a_byte)
 {
-        gulong nb_bytes_left = 0;
-
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && a_byte, CR_BAD_PARAM_ERROR);
 
@@ -414,12 +412,6 @@ cr_input_read_byte (CRInput * a_this, guchar * a_byte)
 
         if (PRIVATE (a_this)->end_of_input == TRUE)
                 return CR_END_OF_INPUT_ERROR;
-
-        nb_bytes_left = cr_input_get_nb_bytes_left (a_this);
-
-        if (nb_bytes_left < 1) {
-                return CR_END_OF_INPUT_ERROR;
-        }
 
         *a_byte = PRIVATE (a_this)->in_buf[PRIVATE (a_this)->next_byte_index];
 

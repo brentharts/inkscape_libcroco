@@ -420,8 +420,7 @@ cr_font_size_set_predefined_absolute_font_size (CRFontSize *a_this,
                                                 enum CRPredefinedAbsoluteFontSize a_predefined)
 {
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR) ;
-        g_return_val_if_fail (a_predefined >= FONT_SIZE_XX_SMALL
-                              && a_predefined < NB_PREDEFINED_ABSOLUTE_FONT_SIZES,
+        g_return_val_if_fail ((unsigned)a_predefined < NB_PREDEFINED_ABSOLUTE_FONT_SIZES,
                               CR_BAD_PARAM_ERROR) ;
 
         a_this->type = PREDEFINED_ABSOLUTE_FONT_SIZE ;
@@ -442,8 +441,7 @@ cr_font_size_set_relative_font_size (CRFontSize *a_this,
                                      enum CRRelativeFontSize a_relative)
 {
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR) ;
-        g_return_val_if_fail (a_relative >= FONT_SIZE_LARGER
-                              && a_relative < NB_RELATIVE_FONT_SIZE,
+        g_return_val_if_fail ((unsigned)a_relative < NB_RELATIVE_FONT_SIZE,
                               CR_BAD_PARAM_ERROR) ;
         
         a_this->type = RELATIVE_FONT_SIZE ;
@@ -465,8 +463,7 @@ cr_font_size_set_absolute_font_size (CRFontSize *a_this,
                                      gdouble a_value)
 {
         g_return_val_if_fail (a_this, CR_BAD_PARAM_ERROR) ;
-        g_return_val_if_fail (a_num_type >= NUM_AUTO
-                              && a_num_type < NB_NUM_TYPE,
+        g_return_val_if_fail ((unsigned)a_num_type < NB_NUM_TYPE,
                               CR_BAD_PARAM_ERROR) ;
 
         a_this->type = ABSOLUTE_FONT_SIZE ;
@@ -557,8 +554,7 @@ cr_font_size_get_smaller_predefined_font_size
         enum CRPredefinedAbsoluteFontSize result = FONT_SIZE_MEDIUM ;
 
         g_return_if_fail (a_smaller_size) ;
-        g_return_if_fail (a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES
-                          && a_font_size >= FONT_SIZE_XX_SMALL) ;
+        g_return_if_fail ((unsigned)a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES) ;
 
         switch (a_font_size) {
         case FONT_SIZE_XX_SMALL:
@@ -610,8 +606,7 @@ cr_font_size_get_larger_predefined_font_size
         enum CRPredefinedAbsoluteFontSize result = FONT_SIZE_MEDIUM ;
         
         g_return_if_fail (a_larger_size) ;
-        g_return_if_fail (a_font_size >= FONT_SIZE_XX_SMALL 
-                          && a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES) ;
+        g_return_if_fail ((unsigned)a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES) ;
 
         switch (a_font_size) {
         case FONT_SIZE_XX_SMALL:
@@ -658,8 +653,7 @@ gboolean
 cr_font_size_is_predefined_absolute_font_size 
 				(enum CRPredefinedAbsoluteFontSize a_font_size)
 {
-        if (a_font_size >= FONT_SIZE_XX_SMALL
-            && a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES) {
+        if ((unsigned)a_font_size < NB_PREDEFINED_ABSOLUTE_FONT_SIZES) {
                 return TRUE ;
         } else {
                 return FALSE ;

@@ -37,7 +37,7 @@ cr_simple_sel_new (void)
 {
         CRSimpleSel *result = NULL;
 
-        result = g_try_malloc (sizeof (CRSimpleSel));
+        result = (CRSimpleSel *) g_try_malloc (sizeof (CRSimpleSel));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -123,6 +123,10 @@ cr_simple_sel_to_string (CRSimpleSel const * a_this)
 
                                 case COMB_PLUS:
                                         g_string_append (str_buf, "+");
+                                        break;
+
+                                case COMB_TILDE:
+                                        g_string_append (str_buf, "~");
                                         break;
 
                                 case COMB_GT:
@@ -298,10 +302,10 @@ cr_simple_sel_compute_specificity (CRSimpleSel * a_this)
  *@a_this: the this pointer of the current instance of #CRSimpleSel.
  *
  *The destructor of the current instance of
- *#CRSimpleSel.
+ *#CRSimpleSel. Recursively calls the destructor of #CRSimpleSel->next
  */
 void
-cr_simple_sel_destroy (CRSimpleSel * a_this)
+cr_simple_sel_destroy (CRSimpleSel * const a_this)
 {
         g_return_if_fail (a_this);
 
@@ -317,9 +321,8 @@ cr_simple_sel_destroy (CRSimpleSel * a_this)
 
         if (a_this->next) {
                 cr_simple_sel_destroy (a_this->next);
+                a_this->next = NULL;
         }
 
-        if (a_this) {
-                g_free (a_this);
-        }
+        g_free (a_this);
 }

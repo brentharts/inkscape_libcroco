@@ -17,6 +17,7 @@ crocoinc_HEADERS = \
 	cr-doc-handler.h \
 	cr-enc-handler.h \
 	cr-input.h \
+	cr-libxml-node-iface.h \
 	cr-num.h \
 	cr-om-parser.h \
 	cr-parser.h \
@@ -46,6 +47,8 @@ libcroco_0_6_la_SOURCES = \
 	cr-input.h \
 	cr-enc-handler.c \
 	cr-enc-handler.h \
+	cr-libxml-node-iface.c \
+	cr-node-iface.h \
 	cr-num.c \
 	cr-num.h \
 	cr-rgb.c \

@@ -142,7 +142,7 @@ static CRPropertyDesc gv_prop_table[] = {
         {"font-weight", PROP_ID_FONT_WEIGHT},
 	{"white-space", PROP_ID_WHITE_SPACE},
         /*must be the last one */
-        {NULL, 0}
+        {NULL, (enum CRPropertyID) 0}
 };
 
 /**
@@ -185,7 +185,7 @@ static struct CRNumPropEnumDumpInfo gv_num_props_dump_infos[] = {
         {NUM_PROP_MARGIN_BOTTOM, "margin-bottom"},
         {NUM_PROP_MARGIN_LEFT, "margin-left"},
         {NUM_PROP_WIDTH, "width"},
-        {0, NULL}
+        {(enum CRNumProp) 0, NULL}
 };
 
 struct CRRgbPropEnumDumpInfo {
@@ -200,7 +200,7 @@ static struct CRRgbPropEnumDumpInfo gv_rgb_props_dump_infos[] = {
         {RGB_PROP_BORDER_LEFT_COLOR, "left-color"},
         {RGB_PROP_COLOR, "color"},
         {RGB_PROP_BACKGROUND_COLOR, "background-color"},
-        {0, NULL}
+        {(enum CRRgbProp) 0, NULL}
 };
 
 struct CRBorderStylePropEnumDumpInfo {
@@ -215,7 +215,7 @@ static struct CRBorderStylePropEnumDumpInfo gv_border_style_props_dump_infos[]
         {BORDER_STYLE_PROP_RIGHT, "border-style-right"},
         {BORDER_STYLE_PROP_BOTTOM, "boder-style-bottom"},
         {BORDER_STYLE_PROP_LEFT, "border-style-left"},
-        {0, NULL}
+        {(enum CRBorderStyleProp) 0, NULL}
 };
 
 static enum CRStatus
@@ -421,11 +421,11 @@ cr_style_get_prop_id (const guchar * a_prop)
                 cr_style_init_properties ();
         }
 
-        raw_id = g_hash_table_lookup (gv_prop_hash, a_prop);
+        raw_id = (gpointer *) g_hash_table_lookup (gv_prop_hash, a_prop);
         if (!raw_id) {
                 return PROP_ID_NOT_KNOWN;
         }
-        return GPOINTER_TO_INT (raw_id);
+        return (enum CRPropertyID)GPOINTER_TO_INT (raw_id);
 }
 
 static enum CRStatus
@@ -570,7 +570,7 @@ set_prop_border_width_from_value (CRStyle *a_style,
                                   CRTerm *a_value)
 {
         CRTerm *cur_term = NULL ;
-        enum CRDirection direction = DIR_TOP ;
+        int dir;
 
         g_return_val_if_fail (a_style && a_value,
                               CR_BAD_PARAM_ERROR) ;
@@ -579,9 +579,9 @@ set_prop_border_width_from_value (CRStyle *a_style,
         if (!cur_term)
                 return CR_ERROR ;
 
-        for (direction = DIR_TOP ; 
-             direction < NB_DIRS ; direction ++) {
-                set_prop_border_x_width_from_value (a_style, 
+        for (dir = (int) DIR_TOP ; dir < (int)NB_DIRS ; dir++) {
+                 enum CRDirection direction = (enum CRDirection)dir;
+                 set_prop_border_x_width_from_value (a_style,
                                                     cur_term,
                                                     direction) ;
         }
@@ -699,7 +699,7 @@ set_prop_border_style_from_value (CRStyle *a_style,
                                   CRTerm *a_value)
 {
         CRTerm *cur_term = NULL ;
-        enum CRDirection direction = DIR_TOP ;
+        int dir;
 
         g_return_val_if_fail (a_style && a_value, 
                               CR_BAD_PARAM_ERROR) ;
@@ -709,9 +709,8 @@ set_prop_border_style_from_value (CRStyle *a_style,
                 return CR_ERROR ;
         }
         
-        for (direction = DIR_TOP ; 
-             direction < NB_DIRS ;
-             direction ++) {
+        for (dir = (int)DIR_TOP ; dir < (int)NB_DIRS ; dir++) {
+                enum CRDirection direction = (enum CRDirection)dir;
                 set_prop_border_x_style_from_value (a_style, 
                                                     cur_term,
                                                     direction) ;
@@ -1166,14 +1165,14 @@ set_prop_border_x_from_value (CRStyle * a_style, CRTerm * a_value,
 static enum CRStatus
 set_prop_border_from_value (CRStyle * a_style, CRTerm * a_value)
 {
-        enum CRDirection direction = 0;
+        int dir;
 
         g_return_val_if_fail (a_style && a_value, CR_BAD_PARAM_ERROR);
 
-        for (direction = 0; direction < NB_DIRS; direction++) {
+        for (dir = 0; dir < (int)NB_DIRS; dir++) {
                 set_prop_border_x_from_value (a_style, 
                                               a_value, 
-                                              direction);
+                                              (enum CRDirection)dir);
         }
 
         return CR_OK;
@@ -1183,7 +1182,7 @@ static enum CRStatus
 set_prop_padding_from_value (CRStyle * a_style, CRTerm * a_value)
 {
         CRTerm *cur_term = NULL;
-        enum CRDirection direction = 0;
+        int dir;
         enum CRStatus status = CR_OK;
         
         g_return_val_if_fail (a_style && a_value, CR_BAD_PARAM_ERROR);
@@ -1197,8 +1196,9 @@ set_prop_padding_from_value (CRStyle * a_style, CRTerm * a_value)
         if (!cur_term)
                 return CR_ERROR ;
 
-        for (direction = 0; direction < NB_DIRS; direction++) {
-                set_prop_padding_x_from_value (a_style, cur_term, direction);
+        for (dir = 0; dir < (int)NB_DIRS; dir++) {
+                set_prop_padding_x_from_value (a_style,
+				            cur_term, (enum CRDirection)dir);
         }
         cur_term = cur_term->next;
 
@@ -1234,7 +1234,7 @@ static enum CRStatus
 set_prop_margin_from_value (CRStyle * a_style, CRTerm * a_value)
 {
         CRTerm *cur_term = NULL;
-        enum CRDirection direction = 0;
+        int dir;
         enum CRStatus status = CR_OK;
 
         g_return_val_if_fail (a_style && a_value, CR_BAD_PARAM_ERROR);
@@ -1248,8 +1248,9 @@ set_prop_margin_from_value (CRStyle * a_style, CRTerm * a_value)
         if (!cur_term)
                 return CR_OK;
 
-        for (direction = 0; direction < NB_DIRS; direction++) {
-                set_prop_margin_x_from_value (a_style, cur_term, direction);
+        for (dir = 0; dir < (int)NB_DIRS; dir++) {
+                set_prop_margin_x_from_value(a_style,
+				        cur_term, (enum CRDirection)dir);
         }
         cur_term = cur_term->next;
 
@@ -1713,7 +1714,7 @@ cr_style_new (gboolean a_set_props_to_initial_values)
 {
         CRStyle *result = NULL;
 
-        result = g_try_malloc (sizeof (CRStyle));
+        result = (CRStyle *) g_try_malloc (sizeof (CRStyle));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -2682,7 +2683,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
                  *before outputting it value
                  */
                 cr_utils_dump_n_chars2 (' ', str, indent);
-                tmp_str = (gchar *) num_prop_code_to_string (i);
+                tmp_str = (gchar *) num_prop_code_to_string ((enum CRNumProp) i);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);
                 } else {
@@ -2696,7 +2697,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
         }
         /*loop over the rgb_props and to_string() them all */
         for (i = RGB_PROP_BORDER_TOP_COLOR; i < NB_RGB_PROPS; i++) {
-                tmp_str = (gchar *) rgb_prop_code_to_string (i);
+                tmp_str = (gchar *) rgb_prop_code_to_string ((enum CRRgbProp) i);
                 cr_utils_dump_n_chars2 (' ', str, indent);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);
@@ -2711,7 +2712,7 @@ cr_style_to_string (CRStyle * a_this, GString ** a_str, guint a_nb_indent)
         }
         /*loop over the border_style_props and to_string() them */
         for (i = BORDER_STYLE_PROP_TOP; i < NB_BORDER_STYLE_PROPS; i++) {
-                tmp_str = (gchar *) border_style_prop_code_to_string (i);
+                tmp_str = (gchar *) border_style_prop_code_to_string ((enum CRBorderStyleProp) i);
                 cr_utils_dump_n_chars2 (' ', str, indent);
                 if (tmp_str) {
                         g_string_append_printf (str, "%s: ", tmp_str);

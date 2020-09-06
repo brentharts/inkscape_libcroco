@@ -40,7 +40,8 @@ cr_selector_new (CRSimpleSel * a_simple_sel)
 {
         CRSelector *result = NULL;
 
-        result = g_try_malloc (sizeof (CRSelector));
+        result = (CRSelector *) g_try_malloc (sizeof (CRSelector));
+
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -50,10 +51,25 @@ cr_selector_new (CRSimpleSel * a_simple_sel)
         return result;
 }
 
+/**
+ * cr_selector_parse_from_buf:
+ *
+ *@a_char_buf: the buffer to parse.
+ *@a_enc: the encoding of the input buffer a_char_buf.
+ *
+ *Parses a buf for selectors. 
+ *
+ *Fix Me: parsing will fail for some cases if buf does not end with '{'.
+ *
+ *Returns the newly built instance of #CRSelector, or
+ *NULL in case of failure.
+ */
 CRSelector *
 cr_selector_parse_from_buf (const guchar * a_char_buf, enum CREncoding a_enc)
 {
         CRParser *parser = NULL;
+        CRSelector *selector = NULL;
+        enum CRStatus status;
 
         g_return_val_if_fail (a_char_buf, NULL);
 
@@ -61,7 +77,16 @@ cr_selector_parse_from_buf (const guchar * a_char_buf, enum CREncoding a_enc)
                                          a_enc, FALSE);
         g_return_val_if_fail (parser, NULL);
 
-        return NULL;
+        status = cr_parser_parse_selector (parser, &selector);
+
+        if (status != CR_OK) {
+                if (selector) {
+                        cr_selector_unref (selector);
+                        selector = NULL;
+                }
+        }
+
+        return selector;
 }
 
 /**
@@ -143,7 +168,7 @@ cr_selector_to_string (CRSelector const * a_this)
         guchar *result = NULL;
         GString *str_buf = NULL;
 
-        str_buf = g_string_new (NULL);
+        str_buf = (GString *) g_string_new (NULL);
         g_return_val_if_fail (str_buf, NULL);
 
         if (a_this) {

@@ -299,6 +299,7 @@ cr_tknzr_parse_w (CRTknzr * a_this,
 
                 status = cr_tknzr_peek_char (a_this, &cur_char);
                 if (status == CR_END_OF_INPUT_ERROR) {
+                        status = CR_OK;
                         break;
                 } else if (status != CR_OK) {
                         goto error;
@@ -433,7 +434,7 @@ cr_tknzr_parse_comment (CRTknzr * a_this,
         CRInputPos init_pos;
         guint32 cur_char = 0, next_char= 0;
         CRString *comment = NULL;
-        CRParsingLocation loc = {0} ;
+        CRParsingLocation loc = {0,0,0} ;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && PRIVATE (a_this)->input, 
@@ -698,12 +699,13 @@ cr_tknzr_parse_string (CRTknzr * a_this, CRString ** a_str)
                 guchar next_chars[2] = { 0 };
 
                 PEEK_BYTE (a_this, 1, &next_chars[0]);
-                PEEK_BYTE (a_this, 2, &next_chars[1]);
 
                 if (next_chars[0] == '\\') {
                         guchar *tmp_char_ptr1 = NULL,
                                 *tmp_char_ptr2 = NULL;
                         guint32 esc_code = 0;
+
+                        PEEK_BYTE (a_this, 2, &next_chars[1]);
 
                         if (next_chars[1] == '\'' || next_chars[1] == '"') {
                                 g_string_append_unichar (str->stryng, 
@@ -1022,7 +1024,7 @@ cr_tknzr_parse_name (CRTknzr * a_this,
         gboolean str_needs_free = FALSE,
                 is_first_nmchar=TRUE ;
         glong i = 0;
-        CRParsingLocation loc = {0} ;
+        CRParsingLocation loc = {0,0,0} ;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && PRIVATE (a_this)->input
@@ -1074,7 +1076,7 @@ cr_tknzr_parse_hash (CRTknzr * a_this, CRString ** a_str)
         CRInputPos init_pos;
         enum CRStatus status = CR_OK;
         gboolean str_needs_free = FALSE;
-        CRParsingLocation loc = {0} ;
+        CRParsingLocation loc = {0,0,0} ;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && PRIVATE (a_this)->input,
@@ -1127,7 +1129,7 @@ cr_tknzr_parse_uri (CRTknzr * a_this,
         enum CRStatus status = CR_PARSING_ERROR;
         guchar tab[4] = { 0 }, *tmp_ptr1 = NULL, *tmp_ptr2 = NULL;
         CRString *str = NULL;
-        CRParsingLocation location = {0} ;
+        CRParsingLocation location = {0,0,0} ;
 
         g_return_val_if_fail (a_this 
                               && PRIVATE (a_this)
@@ -1252,7 +1254,7 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
                 blue = 0,
                 i = 0;
         gboolean is_percentage = FALSE;
-        CRParsingLocation location = {0} ;
+        CRParsingLocation location = {0,0,0} ;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this), CR_BAD_PARAM_ERROR);
 
@@ -1279,12 +1281,7 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
         status = cr_tknzr_parse_num (a_this, &num);
         ENSURE_PARSING_COND ((status == CR_OK) && (num != NULL));
 
-        if (num->val > G_MAXLONG) {
-                status = CR_PARSING_ERROR;
-                goto error;
-        }
-
-        red = num->val;
+        red = (glong)num->val;
         cr_num_destroy (num);
         num = NULL;
 
@@ -1303,11 +1300,6 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
                 status = cr_tknzr_parse_num (a_this, &num);
                 ENSURE_PARSING_COND ((status == CR_OK) && (num != NULL));
 
-                if (num->val > G_MAXLONG) {
-                        status = CR_PARSING_ERROR;
-                        goto error;
-                }
-
                 PEEK_BYTE (a_this, 1, &next_bytes[0]);
                 if (next_bytes[0] == '%') {
                         SKIP_CHARS (a_this, 1);
@@ -1315,9 +1307,9 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
                 }
 
                 if (i == 0) {
-                        green = num->val;
+                        green = (glong)num->val;
                 } else if (i == 1) {
-                        blue = num->val;
+                        blue = (glong)num->val;
                 }
 
                 if (num) {
@@ -1494,7 +1486,7 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                 next_char = 0;
         gdouble numerator, denominator = 1;
         CRInputPos init_pos;
-        CRParsingLocation location = {0} ;
+        CRParsingLocation location = {0,0,0} ;
         int sign = 1;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
@@ -1596,7 +1588,7 @@ cr_tknzr_new (CRInput * a_input)
 {
         CRTknzr *result = NULL;
 
-        result = g_try_malloc (sizeof (CRTknzr));
+        result = (CRTknzr *) g_try_malloc (sizeof (CRTknzr));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -1605,7 +1597,7 @@ cr_tknzr_new (CRInput * a_input)
 
         memset (result, 0, sizeof (CRTknzr));
 
-        result->priv = g_try_malloc (sizeof (CRTknzrPriv));
+        result->priv = (CRTknzrPriv *)g_try_malloc (sizeof (CRTknzrPriv));
 
         if (result->priv == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -1977,7 +1969,7 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
         CRInput *input = NULL;
         CRString *str = NULL;
         CRRgb *rgb = NULL;
-        CRParsingLocation location = {0} ;
+        CRParsingLocation location = {0,0,0} ;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
                               && a_tk && *a_tk == NULL
@@ -2546,7 +2538,7 @@ cr_tknzr_get_next_token (CRTknzr * a_this, CRToken ** a_tk)
                 /*process the fallback cases here */
 
                 if (next_char == '\\'
-                    || (cr_utils_is_nonascii (next_bytes[0]) == TRUE)
+                    || (cr_utils_is_nonascii (next_char) == TRUE)
                     || ((next_char >= 'a') && (next_char <= 'z'))
                     || ((next_char >= 'A') && (next_char <= 'Z'))) {
                         status = cr_tknzr_parse_ident (a_this, &str);

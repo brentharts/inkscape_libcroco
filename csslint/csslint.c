@@ -24,6 +24,7 @@
  */
 
 #include "libcroco.h"
+#include "cr-libxml-node-iface.h"
 #include <libxml/xpath.h>
 
 #include <glib.h>
@@ -367,7 +368,7 @@ evaluate_selectors (gchar * a_xml_path,
                 status = CR_ERROR;
                 goto end;
         }
-        sel_eng = cr_sel_eng_new ();
+        sel_eng = cr_sel_eng_new (&cr_libxml_node_iface);
         if (!sel_eng) {
                 g_printerr
                         ("Error: Could not instantiate the selection engine\n");

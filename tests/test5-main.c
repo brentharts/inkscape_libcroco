@@ -20,9 +20,12 @@
  * USA
  */
 
-#include <string.h>
 #include "cr-test-utils.h"
+#include "cr-libxml-node-iface.h"
 #include "libcroco.h"
+
+#include <libxml/tree.h>
+#include <string.h>
 
 /**
  *@file
@@ -167,7 +170,7 @@ test_sel_eng (guchar * a_file_uri)
 
         }
 
-        selection_engine = cr_sel_eng_new ();
+        selection_engine = cr_sel_eng_new (&cr_libxml_node_iface);
 
         cur_node = xml_doc->children;
 

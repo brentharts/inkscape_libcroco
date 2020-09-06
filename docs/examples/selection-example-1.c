@@ -11,6 +11,7 @@
  */
 
 #include <libcroco/libcroco.h>
+#include <libcroco/cr-libxml-node-iface.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 
@@ -83,7 +84,7 @@ init (struct workspace *ws, char **args)
 		return -1;
 	}
 	ws->cascade = cr_cascade_new(ws->stylesheet, 0, 0);
-	ws->selector = cr_sel_eng_new();
+	ws->selector = cr_sel_eng_new(&cr_libxml_node_iface);
 	return 1 ;
 }
 

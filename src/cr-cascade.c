@@ -104,7 +104,7 @@ cr_cascade_new (CRStyleSheet * a_author_sheet,
  *Gets a sheet, part of the cascade.
  *Note that the returned stylesheet
  *is refcounted so if the caller wants
- *to manage it's lifecycle, it must use
+ *to manage its lifecycle, it must use
  *cr_stylesheet_ref()/cr_stylesheet_unref() instead
  *of the cr_stylesheet_destroy() method.
  *Returns the style sheet, or NULL if it does not
@@ -114,8 +114,7 @@ CRStyleSheet *
 cr_cascade_get_sheet (CRCascade * a_this, enum CRStyleOrigin a_origin)
 {
         g_return_val_if_fail (a_this
-                              && a_origin >= ORIGIN_UA
-                              && a_origin < NB_ORIGINS, NULL);
+                              && (unsigned)a_origin < NB_ORIGINS, NULL);
 
         return PRIVATE (a_this)->sheets[a_origin];
 }
@@ -136,8 +135,7 @@ cr_cascade_set_sheet (CRCascade * a_this,
                       CRStyleSheet * a_sheet, enum CRStyleOrigin a_origin)
 {
         g_return_val_if_fail (a_this
-                              && a_origin >= ORIGIN_UA
-                              && a_origin < NB_ORIGINS, CR_BAD_PARAM_ERROR);
+                              && (unsigned)a_origin < NB_ORIGINS, CR_BAD_PARAM_ERROR);
 
         if (PRIVATE (a_this)->sheets[a_origin])
                 cr_stylesheet_unref (PRIVATE (a_this)->sheets[a_origin]);
@@ -200,7 +198,7 @@ cr_cascade_destroy (CRCascade * a_this)
         if (PRIVATE (a_this)) {
                 gulong i = 0;
 
-                for (i = 0; PRIVATE (a_this)->sheets && i < NB_ORIGINS; i++) {
+                for (i = 0; i < NB_ORIGINS; i++) {
                         if (PRIVATE (a_this)->sheets[i]) {
                                 if (cr_stylesheet_unref
                                     (PRIVATE (a_this)->sheets[i])

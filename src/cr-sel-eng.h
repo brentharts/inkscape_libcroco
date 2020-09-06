@@ -29,8 +29,7 @@
 #include "cr-cascade.h"
 #include "cr-style.h"
 #include "cr-prop-list.h"
-
-#include <libxml/tree.h>
+#include "cr-node-iface.h"
 
 /**
  *@file:
@@ -43,6 +42,14 @@ G_BEGIN_DECLS
 
 typedef struct _CRSelEng CRSelEng ;
 typedef struct _CRSelEngPriv CRSelEngPriv ;
+typedef struct _CRArguments CRArguments ;
+
+//stores arguments of function of type an+b
+struct _CRArguments
+{
+  int a;
+  int b;
+} ;
 
 /**
  *The Selection engine class.
@@ -56,11 +63,12 @@ struct _CRSelEng
 	CRSelEngPriv *priv ;
 } ;
 
+void cr_sel_eng_set_node_iface(CRSelEng *a_this, CRNodeIface const *);
 
 typedef gboolean (*CRPseudoClassSelectorHandler) (CRSelEng* a_this,
                                                   CRAdditionalSel *a_add_sel,
-                                                  xmlNode *a_node) ;
-CRSelEng * cr_sel_eng_new (void) ;
+                                                  CRXMLNodePtr a_node) ;
+CRSelEng * cr_sel_eng_new (CRNodeIface const *);
 
 enum CRStatus cr_sel_eng_register_pseudo_class_sel_handler (CRSelEng *a_this,
                                                             guchar *a_pseudo_class_sel_name,
@@ -80,24 +88,24 @@ enum CRStatus cr_sel_eng_get_pseudo_class_selector_handler (CRSelEng *a_this,
 
 enum CRStatus cr_sel_eng_matches_node (CRSelEng *a_this, 
                                        CRSimpleSel *a_sel,
-                                       xmlNode *a_node, 
+                                       CRXMLNodePtr a_node, 
                                        gboolean *a_result) ;
 
 enum CRStatus cr_sel_eng_get_matched_rulesets (CRSelEng *a_this,
                                                CRStyleSheet *a_sheet,
-                                               xmlNode *a_node,
+                                               CRXMLNodePtr a_node,
                                                CRStatement ***a_rulesets,
                                                gulong *a_len) ;
 
 enum CRStatus
 cr_sel_eng_get_matched_properties_from_cascade  (CRSelEng *a_this,
                                                  CRCascade *a_cascade,
-                                                 xmlNode *a_node,
+                                                 CRXMLNodePtr a_node,
                                                  CRPropList **a_props) ;
 
 enum CRStatus cr_sel_eng_get_matched_style (CRSelEng *a_this,
                                             CRCascade *a_cascade,
-                                            xmlNode *a_node,
+                                            CRXMLNodePtr a_node,
                                             CRStyle *a_parent_style,
                                             CRStyle **a_style,
                                             gboolean a_set_props_to_initial_values) ;

@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 
 /**
  *@file
- *Declaration of the #CRTem class.
+ *Declaration of the #CRTerm class.
  */
 
 enum CRTermType
@@ -121,6 +121,11 @@ struct _CRTerm
         {
                 CRTerm *func_param ;                        
         } ext_content ;
+
+        /**
+         *A flag to indicate if there is an n as in the nth child expression 'an+b'.
+         */
+        gboolean n;
 
         /**
          *A spare pointer, just in case.
