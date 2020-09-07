@@ -50,6 +50,7 @@ cr_term_clear (CRTerm * a_this)
                         cr_term_destroy (a_this->ext_content.func_param);
                         a_this->ext_content.func_param = NULL;
                 }
+                // fall through
         case TERM_STRING:
         case TERM_IDENT:
         case TERM_URI:
