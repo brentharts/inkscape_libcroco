@@ -207,6 +207,8 @@ parse_page_property_cb (CRDocHandler * a_this,
         g_return_if_fail (name);
 
         decl = cr_declaration_new (stmt, name, a_expression);
+        if (!decl)
+                cr_string_destroy(name);
         g_return_if_fail (decl);
         decl->important = a_important;
         stmt->kind.page_rule->decl_list =
@@ -328,16 +330,18 @@ parse_at_media_property_cb (CRDocHandler * a_this,
 
         g_return_if_fail (a_this && a_name);
 
-        name = cr_string_dup (a_name) ;
-        g_return_if_fail (name);
-
 	stmtptr = &stmt;
         status = cr_doc_handler_get_ctxt (a_this, 
                                           (gpointer *) stmtptr);
         g_return_if_fail (status == CR_OK && stmt);
         g_return_if_fail (stmt->type == RULESET_STMT);
 
+        name = cr_string_dup (a_name) ;
+        g_return_if_fail (name);
+
         decl = cr_declaration_new (stmt, name, a_value);
+        if (!decl)
+                cr_string_destroy(name);
         g_return_if_fail (decl);
         decl->important = a_important;
         status = cr_statement_ruleset_append_decl (stmt, decl);
@@ -437,16 +441,18 @@ parse_ruleset_property_cb (CRDocHandler * a_this,
 
         g_return_if_fail (a_this && a_this->priv && a_name);
 
-        stringue = cr_string_dup (a_name);
-        g_return_if_fail (stringue);
-
 	rulesetptr = &ruleset;
         status = cr_doc_handler_get_result (a_this, (gpointer *) rulesetptr);
         g_return_if_fail (status == CR_OK
                           && ruleset 
                           && ruleset->type == RULESET_STMT);
 
+        stringue = cr_string_dup (a_name);
+        g_return_if_fail (stringue);
+
         decl = cr_declaration_new (ruleset, stringue, a_value);
+        if (!decl)
+                cr_string_destroy (stringue);
         g_return_if_fail (decl);
         decl->important = a_important;
         status = cr_statement_ruleset_append_decl (ruleset, decl);
@@ -1326,6 +1332,7 @@ cr_statement_new_at_media_rule (CRStyleSheet * a_sheet,
         return result;
 
       error:
+        g_clear_pointer (&result, cr_statement_destroy);
         return NULL;
 }
 
