@@ -133,6 +133,41 @@ S8+s2
 ***************
 
 ***************
+start_selector
+.quotedstrings
+***************
+
+***************
+property
+-test-string1: "foo'bar"
+***************
+
+***************
+property
+-test-string2: "foo'bar"
+***************
+
+***************
+property
+-test-string3: 'foo"bar'
+***************
+
+***************
+property
+-test-string4: 'foo"bar'
+***************
+
+***************
+property
+-test-string5: 'foo\\bar'
+***************
+
+***************
+end_selector
+.quotedstrings
+***************
+
+***************
 end_document
 ***************
 

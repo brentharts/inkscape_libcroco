@@ -2,7 +2,9 @@
 /*simple Attribute set selectors*/
 s1[foo] {prop1 : "\53 tring"}
 
-s2[foo] {prop1 : "\\73 tring"}
+/* line break is invalid */
+s2[foo] {prop1 : "
+tring"}
 
 /*simple exact attribute selector, simple ruleset*/
 s3[foo="warning"] {prop1 : value1}
@@ -35,3 +37,11 @@ S7:lang(c) {prop1 : value1}
 /*Adjacent selectors, simple ruleset test*/
 S8 + s2 {prop1: value1}
 
+/* quoted strings */
+.quotedstrings {
+    -test-string1: "foo'bar";
+    -test-string2: 'foo\'bar';
+    -test-string3: 'foo"bar';
+    -test-string4: "foo\"bar";
+    -test-string5: 'foo\\bar';
+}
