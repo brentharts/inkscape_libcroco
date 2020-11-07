@@ -28,6 +28,39 @@
 #include "cr-parser.h"
 
 /**
+ * Adds a quoted string onto the end of a GString, expanding it if necessary.
+ * Uses either single or double quotes.
+ *
+ * @pre val is not NULL and is null-terminated. Note that this is true for all
+ * GString::str values.
+ */
+static void
+_string_append_quoted (GString *string, const gchar *val)
+{
+        gchar quote = '\'';
+
+        if (!val) {
+                g_assert_not_reached ();
+                val = "";
+        }
+
+        if (strchr (val, '\'') && !strchr (val, '"')) {
+                quote = '"';
+        }
+
+        g_string_append_c (string, quote);
+
+        for (; *val; ++val) {
+                if (*val == quote || *val == '\\') {
+                        g_string_append_c (string, '\\');
+                }
+                g_string_append_c (string, *val);
+        }
+
+        g_string_append_c (string, quote);
+}
+
+/**
  *@file
  *Definition of the #CRTem class.
  */
@@ -377,16 +410,8 @@ cr_term_to_string (CRTerm const * a_this)
 
                 case TERM_STRING:
                         if (cur->content.str) {
-                                content = (guchar *) g_strndup
-                                        (cur->content.str->stryng->str,
-                                         cur->content.str->stryng->len);
-                        }
-
-                        if (content) {
-                                g_string_append_printf (str_buf,
-                                                        "\"%s\"", content);
-                                g_free (content);
-                                content = NULL;
+                                _string_append_quoted (str_buf,
+                                         cur->content.str->stryng->str);
                         }
                         break;
 
@@ -396,7 +421,6 @@ cr_term_to_string (CRTerm const * a_this)
                                         (cur->content.str->stryng->str,
                                          cur->content.str->stryng->len);
                         }
-
                         if (content) {
                                 g_string_append (str_buf, (const gchar *) content);
                                 g_free (content);
@@ -573,16 +597,8 @@ cr_term_one_to_string (CRTerm const * a_this)
 
         case TERM_STRING:
                 if (a_this->content.str) {
-                        content = (guchar *) g_strndup
-                                (a_this->content.str->stryng->str,
-                                 a_this->content.str->stryng->len);
-                }
-
-                if (content) {
-                        g_string_append_printf (str_buf,
-                                                "\"%s\"", content);
-                        g_free (content);
-                        content = NULL;
+                        _string_append_quoted (str_buf,
+                                 a_this->content.str->stryng->str);
                 }
                 break;
 
@@ -787,3 +803,5 @@ cr_term_destroy (CRTerm * const a_this)
 
         g_free (a_this);
 }
+
+// vi:sw=8:ts=8

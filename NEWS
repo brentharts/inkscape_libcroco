@@ -1,3 +1,11 @@
+0.6.99
+    * Apply inkscape modifications
+    * Consider significant digits for number formatting
+    * Use single instead of double quotes for string output
+    * cr_cascade_set_sheet: Allow a_sheet=NULL
+    * cr_stylesheet_new: Fix reference counting
+    * Mem leak fixes
+
 0.6.13
     * Visual Studio builds: Enhance security of x64 binaries
     * win32/replace.py: Fix replacing items in files with UTF-8 content
