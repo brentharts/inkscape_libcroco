@@ -378,14 +378,8 @@ cr_term_to_string (CRTerm const * a_this)
 
                 case TERM_FUNCTION:
                         if (cur->content.str) {
-                                content = (guchar *) g_strndup
-                                        (cur->content.str->stryng->str,
-                                         cur->content.str->stryng->len);
-                        }
-
-                        if (content) {
                                 g_string_append_printf (str_buf, "%s(",
-                                                        content);
+                                                        cur->content.str->stryng->str);
 
                                 if (cur->ext_content.func_param) {
                                         guchar *tmp_str = NULL;
@@ -402,8 +396,6 @@ cr_term_to_string (CRTerm const * a_this)
                                         }
                                 }
                                 g_string_append (str_buf, ")");
-                                g_free (content);
-                                content = NULL;
                         }
 
                         break;
@@ -416,30 +408,15 @@ cr_term_to_string (CRTerm const * a_this)
                         break;
 
                 case TERM_IDENT:
-                        if (cur->content.str) {
-                                content = (guchar *) g_strndup
-                                        (cur->content.str->stryng->str,
-                                         cur->content.str->stryng->len);
-                        }
-                        if (content) {
-                                g_string_append (str_buf, (const gchar *) content);
-                                g_free (content);
-                                content = NULL;
+                        if (cur->content.str && cur->content.str->stryng->str) {
+                                g_string_append (str_buf, cur->content.str->stryng->str);
                         }
                         break;
 
                 case TERM_URI:
                         if (cur->content.str) {
-                                content = (guchar *) g_strndup
-                                        (cur->content.str->stryng->str,
-                                         cur->content.str->stryng->len);
-                        }
-
-                        if (content) {
                                 g_string_append_printf
-                                        (str_buf, "url(%s)", content);
-                                g_free (content);
-                                content = NULL;
+                                        (str_buf, "url(%s)", cur->content.str->stryng->str);
                         }
                         break;
 
@@ -468,16 +445,8 @@ cr_term_to_string (CRTerm const * a_this)
 
                 case TERM_HASH:
                         if (cur->content.str) {
-                                content = (guchar *) g_strndup
-                                        (cur->content.str->stryng->str,
-                                         cur->content.str->stryng->len);
-                        }
-
-                        if (content) {
                                 g_string_append_printf (str_buf,
-                                                        "#%s", content);
-                                g_free (content);
-                                content = NULL;
+                                                        "#%s", cur->content.str->stryng->str);
                         }
                         break;
 
@@ -563,14 +532,8 @@ cr_term_one_to_string (CRTerm const * a_this)
 
         case TERM_FUNCTION:
                 if (a_this->content.str) {
-                        content = (guchar *) g_strndup
-                                (a_this->content.str->stryng->str,
-                                 a_this->content.str->stryng->len);
-                }
-
-                if (content) {
                         g_string_append_printf (str_buf, "%s(",
-                                                content);
+                                                a_this->content.str->stryng->str);
 
                         if (a_this->ext_content.func_param) {
                                 guchar *tmp_str = NULL;
@@ -588,8 +551,6 @@ cr_term_one_to_string (CRTerm const * a_this)
                                 }
 
                                 g_string_append_printf (str_buf, ")");
-                                g_free (content);
-                                content = NULL;
                         }
                 }
 
@@ -603,31 +564,15 @@ cr_term_one_to_string (CRTerm const * a_this)
                 break;
 
         case TERM_IDENT:
-                if (a_this->content.str) {
-                        content = (guchar *) g_strndup
-                                (a_this->content.str->stryng->str,
-                                 a_this->content.str->stryng->len);
-                }
-
-                if (content) {
-                        g_string_append (str_buf, (const gchar *) content);
-                        g_free (content);
-                        content = NULL;
+                if (a_this->content.str && a_this->content.str->stryng->str) {
+                        g_string_append (str_buf, a_this->content.str->stryng->str);
                 }
                 break;
 
         case TERM_URI:
                 if (a_this->content.str) {
-                        content = (guchar *) g_strndup
-                                (a_this->content.str->stryng->str,
-                                 a_this->content.str->stryng->len);
-                }
-
-                if (content) {
                         g_string_append_printf
-                                (str_buf, "url(%s)", content);
-                        g_free (content);
-                        content = NULL;
+                                (str_buf, "url(%s)", a_this->content.str->stryng->str);
                 }
                 break;
 
@@ -656,16 +601,8 @@ cr_term_one_to_string (CRTerm const * a_this)
 
         case TERM_HASH:
                 if (a_this->content.str) {
-                        content = (guchar *) g_strndup
-                                (a_this->content.str->stryng->str,
-                                 a_this->content.str->stryng->len);
-                }
-
-                if (content) {
                         g_string_append_printf (str_buf,
-                                                "#%s", content);
-                        g_free (content);
-                        content = NULL;
+                                                "#%s", a_this->content.str->stryng->str);
                 }
                 break;
 
