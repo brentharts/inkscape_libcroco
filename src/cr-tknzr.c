@@ -1560,21 +1560,18 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                                             one digit after `.'. */
                 } else if(next_char == 'E' || next_char == 'e'){
                         if(parsing_exp){
-                            /* Only return an error if it's an E, as lowercase
-                             * e can be used for units */
-                            if(next_char == 'e'){
-                                break;
-                            }
                             status = CR_PARSING_ERROR;
                             goto error;
+                        }
+                        // TODO: Better way to implement this?
+                        PEEK_BYTE(a_this, 2, &next_char)
+                        if(!(IS_NUM(next_char) || next_char == '+' || next_char == '-')){
+                            break;
                         }
                         READ_NEXT_CHAR (a_this, &cur_char);
                         parsing_exp = TRUE;
                         just_found_exp = TRUE;
-                        if(next_char == 'E'){
-                            parsed = FALSE; /* Only not parse if uppercase E, as
-                                            lower case e can be used for units*/
-                        }
+                        parsed = FALSE;
                 } else if(next_char == '+' || next_char == '-'){
                         if(!just_found_exp){
                             status = CR_PARSING_ERROR;
@@ -1610,7 +1607,6 @@ cr_tknzr_parse_num (CRTknzr * a_this,
         if (!parsed) {
                 status = CR_PARSING_ERROR;
         }
-
         /*
          *Now, set the output param values.
          */
