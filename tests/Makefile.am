@@ -7,7 +7,7 @@ test-several-media.sh
 #the list of all possible tests goes here.
 
 EXTRALDFLAGS = $(CROCO_LIBS)
-testprogs=test0 test1 test2 test3 test4 test5 test6
+testprogs=test0 test1 test2 test3 test4 test5 test6 test7
 noinst_PROGRAMS = $(testprogs)
 test0_SOURCES = test0-main.c
 test0_LDFLAGS = $(EXTRALDFLAGS)
@@ -23,6 +23,8 @@ test5_SOURCES = test5-main.c cr-test-utils.c cr-test-utils.h
 test5_LDFLAGS = $(EXTRALDFLAGS)
 test6_SOURCES = test6-main.c cr-test-utils.c cr-test-utils.h
 test6_LDFLAGS = $(EXTRALDFLAGS)
+test7_SOURCES = test7-main.c cr-test-utils.c cr-test-utils.h
+test7_LDFLAGS = $(EXTRALDFLAGS)
 
 croco_lib = $(top_builddir)/src/@CROCO_LIB@
 LDADD = $(croco_lib)

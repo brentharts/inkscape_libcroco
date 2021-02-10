@@ -246,6 +246,26 @@ static enum CRStatus cr_tknzr_parse_num (CRTknzr * a_this,
  **********************************/
 
 /**
+ * Helper function to exponentiate 10 by a certain amount.
+ * Used for SVG2's exponential number handling.
+ *
+ * @param exp_by what to exponentiate 10 by
+ * @return a number which 10**(exp_by)
+ */
+float pow_ten(gdouble exp_by, int sign){
+    float res = 1;
+    int i;
+    for(i=0;i<exp_by;i++){
+        if(sign < 0){
+            res /= 10;
+        } else {
+            res *= 10;
+        }
+    }
+    return res;
+}
+
+/**
  *Parses a "w" as defined by the css spec at [4.1.1]:
  * w ::= [ \t\r\n\f]*
  *
@@ -1482,11 +1502,16 @@ cr_tknzr_parse_num (CRTknzr * a_this,
         gboolean parsing_dec,  /* true iff seen decimal point. */
                 parsed; /* true iff the substring seen so far is a valid CSS
                            number, i.e. `[0-9]+|[0-9]*\.[0-9]+'. */
+        gboolean parsing_exp = FALSE,   /* true if seen an exponential */
+                just_found_exp = FALSE; /* Set to true if the previous character
+                                   an exponent. Used for potential signing*/
+        gdouble exponent = 0;       /* Start off the exponent at 0 */
+        int exp_sign = 1;
         guint32 cur_char = 0,
                 next_char = 0;
         gdouble numerator, denominator = 1;
         CRInputPos init_pos;
-        CRParsingLocation location = {0,0,0} ;
+        CRParsingLocation location = {0,0,0};
         int sign = 1;
 
         g_return_val_if_fail (a_this && PRIVATE (a_this)
@@ -1502,7 +1527,6 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                 }
                 READ_NEXT_CHAR (a_this, &cur_char);
         }
-
         if (IS_NUM (cur_char)) {
                 numerator = (cur_char - '0');
                 parsing_dec = FALSE;
@@ -1534,13 +1558,49 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                         parsing_dec = TRUE;
                         parsed = FALSE;  /* In CSS, there must be at least
                                             one digit after `.'. */
+                } else if(next_char == 'E' || next_char == 'e'){
+                        if(parsing_exp){
+                            /* Only return an error if it's an E, as lowercase
+                             * e can be used for units */
+                            if(next_char == 'e'){
+                                break;
+                            }
+                            status = CR_PARSING_ERROR;
+                            goto error;
+                        }
+                        READ_NEXT_CHAR (a_this, &cur_char);
+                        parsing_exp = TRUE;
+                        just_found_exp = TRUE;
+                        if(next_char == 'E'){
+                            parsed = FALSE; /* Only not parse if uppercase E, as
+                                            lower case e can be used for units*/
+                        }
+                } else if(next_char == '+' || next_char == '-'){
+                        if(!just_found_exp){
+                            status = CR_PARSING_ERROR;
+                            goto error;
+                        }
+                        READ_NEXT_CHAR (a_this, &cur_char);
+                        just_found_exp = FALSE;
+                        if (cur_char == '-') {
+                            exp_sign = -1;
+                        }
                 } else if (IS_NUM (next_char)) {
                         READ_NEXT_CHAR (a_this, &cur_char);
                         parsed = TRUE;
-
-                        numerator = numerator * 10 + (cur_char - '0');
-                        if (parsing_dec) {
-                                denominator *= 10;
+                        just_found_exp = FALSE;
+                        if(parsing_exp){
+                            if(exponent == 0){
+                                exponent = (cur_char - '0');
+                            } else {
+                                exponent = exponent * 10 + (cur_char - '0');
+                            }
+                        } else
+                        {
+                            numerator = numerator * 10 + (cur_char - '0');
+                            if (parsing_dec) {
+                                    denominator *= 10;
+                            }
                         }
                 } else {
                         break;
@@ -1555,7 +1615,7 @@ cr_tknzr_parse_num (CRTknzr * a_this,
          *Now, set the output param values.
          */
         if (status == CR_OK) {
-                gdouble val = (numerator / denominator) * sign;
+                gdouble val = ((numerator / denominator) * sign) * pow_ten(exponent, exp_sign);
                 if (*a_num == NULL) {
                         *a_num = cr_num_new_with_val (val, val_type);
 
