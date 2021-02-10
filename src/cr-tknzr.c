@@ -1570,9 +1570,11 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                         break;
                 }
         }
+
         if (!parsed) {
                 status = CR_PARSING_ERROR;
         }
+
         /*
          *Now, set the output param values.
          */
