@@ -1546,6 +1546,7 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                         READ_NEXT_CHAR (a_this, &cur_char);
                         parsing_exp = TRUE;
                         parsed = FALSE;
+                        
                         if (next_char == '+') {
                             READ_NEXT_CHAR (a_this, &cur_char);
                         } else if (next_char == '-') {
@@ -1554,10 +1555,10 @@ cr_tknzr_parse_num (CRTknzr * a_this,
                         } else if (!IS_NUM (next_char)) {
                             break;
                         }
-
                 } else if (IS_NUM (next_char)) {
                         READ_NEXT_CHAR (a_this, &cur_char);
                         parsed = TRUE;
+                        
                         if (parsing_exp) {
                             exponent = exponent * 10 + (cur_char - '0');
                         } else {
