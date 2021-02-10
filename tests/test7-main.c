@@ -31,10 +31,16 @@
 #include "cr-test-utils.h"
 
 const guchar *gv_cssbuf =
-        (const guchar *) ".exp1n1 {stroke:#007844;stroke-width:4E6}"
-        ".exp1n2 {stroke:#007844;stroke-width:4e6}"
-        ".exp2n1 {stroke:#007844;stroke-width:4E-6}"
-        ".exp2n2 {stroke:#007844;stroke-width:4e-6}";
+        (const guchar *) ".exp1n1 {stroke-width:4E6}"
+        ".exp1n2 {stroke-width:4e6}"
+        ".exp1n3 {stroke-width:4e+6}"
+        ".exp2n1 {stroke-width:4E-6}"
+        ".exp2n2 {stroke-width:4e-6}"
+        ".exp3n1 {stroke-width:4e6em}"
+        ".exp3n2 {stroke-width:4e6ex}"
+        ".exp3n3 {stroke-width:4e6in}"
+        ".exp4n1 {stroke-width:3.14e4}"
+        ".exp4n2 {stroke-width:3.14e-4}";
 
 static enum CRStatus
   test_cr_parser_parse (void);
@@ -62,6 +68,11 @@ test_cr_parser_parse (void)
 
         if (status == CR_OK && stylesheet) {
                 cr_stylesheet_dump (stylesheet, stdout);
+                // TODO: Keep this or change .out file?
+                // Adding this because my test editor adds a newline character
+                // at the last line, whereas cr_stylesheet_dump doesn't, which
+                // results in a diff error/warning.
+                printf("\n");
                 cr_stylesheet_destroy (stylesheet);
         }
         cr_om_parser_destroy (parser);
