@@ -22,10 +22,6 @@
  * USA
  */
 
-/*
- *$Id$
- */
-
 #include <string.h>
 #include "libcroco.h"
 #include "cr-test-utils.h"
@@ -68,7 +64,6 @@ test_cr_parser_parse (void)
 
         if (status == CR_OK && stylesheet) {
                 cr_stylesheet_dump (stylesheet, stdout);
-                // TODO: Keep this or change .out file?
                 // Adding this because my test editor adds a newline character
                 // at the last line, whereas cr_stylesheet_dump doesn't, which
                 // results in a diff error/warning.
