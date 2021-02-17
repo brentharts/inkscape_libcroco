@@ -1,7 +1,7 @@
 image: registry.gitlab.com/inkscape/inkscape-ci-docker/master
 
 variables:
-  CFLAGS: "-g -fsanitize=address -fno-omit-frame-pointer"
+  CFLAGS: "-g -fsanitize=address -fno-omit-frame-pointer -std=gnu89 -Werror"
   LDFLAGS: "-fsanitize=address"
   ASAN_OPTIONS: "detect_leaks=0"
 
