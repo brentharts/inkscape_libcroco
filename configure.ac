@@ -5,7 +5,7 @@ AC_CONFIG_SRCDIR([src/cr-input.c])
 AC_CANONICAL_HOST
 
 # gnu strictness to generate the INSTALL file
-AM_INIT_AUTOMAKE([1.13 tar-ustar dist-xz no-dist-gzip -Wno-portability gnu])
+AM_INIT_AUTOMAKE([1.13 tar-ustar dist-xz no-dist-gzip -Wno-portability foreign])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 

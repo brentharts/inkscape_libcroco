@@ -52,7 +52,7 @@ make
 
 %files 
 %defattr(-, root, root)
-%doc AUTHORS COPYING COPYING.LIB ChangeLog NEWS README
+%doc AUTHORS COPYING COPYING.LIB ChangeLog NEWS README.md
 %{_bindir}/csslint
 %{_mandir}/man1/csslint*
 %{_libdir}/*.so.*
