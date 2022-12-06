@@ -37,3 +37,7 @@
 .exp4n2 {
   stroke-width : 0.000314
 }
+
+.e4n2 {
+  stroke-width : 0.000024
+}

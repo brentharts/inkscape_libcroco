@@ -36,7 +36,9 @@ const guchar *gv_cssbuf =
         ".exp3n2 {stroke-width:4e6ex}"
         ".exp3n3 {stroke-width:4e6in}"
         ".exp4n1 {stroke-width:3.14e4}"
-        ".exp4n2 {stroke-width:3.14e-4}";
+        ".exp4n2 {stroke-width:3.14e-4}"
+        ".e4n2 {stroke-width:.24e-4}"
+        ".e4n3 {stroke-width:1.e1}";            // This one should be ignored
 
 static enum CRStatus
   test_cr_parser_parse (void);
