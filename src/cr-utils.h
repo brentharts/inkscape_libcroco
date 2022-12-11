@@ -26,7 +26,6 @@
 
 #include <stdio.h>
 #include <glib.h>
-#include "libcroco-config.h"
 
 G_BEGIN_DECLS
 
