@@ -26,8 +26,8 @@ foreach(source ${testprogs})
     )
 endforeach()
 
-if(0)
-    # Run each test separately (slower than all at once)
+if(1)
+    # Run each test separately
 
     set(testscripts
         test-functional-notation.sh
@@ -47,7 +47,7 @@ if(0)
 
     foreach(source ${testprogs} ${testscripts})
         add_test(NAME ${source}
-            COMMAND ${CMAKE_SOURCE_DIR}/tests/testctl run ${source}
+            COMMAND ${CMAKE_SOURCE_DIR}/tests/testctl run --test-and-report ${source}
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         )
         set_tests_properties(${source} PROPERTIES DEPENDS "cleantest")

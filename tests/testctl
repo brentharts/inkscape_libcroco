@@ -335,6 +335,7 @@ run_test_report_single ()
 execute_run_cmd ()
 {
     args=$@
+    test_and_report=no
 
     if test "$1" != "run" ; then
 	echo "internal error: first argument should be \'run\'"
@@ -364,6 +365,17 @@ execute_run_cmd ()
 		shift
 		;;
 
+	    "--test-and-report")
+		test_and_report=yes
+		shift
+		TEST_PROG="$1"
+		shift
+		if test -z "$TEST_PROG"; then
+		    echo "--test-and-report must be followed by a prog name"
+		    exit
+		fi
+		;;
+
 	    *)
 		break 
 		;;
@@ -384,10 +396,12 @@ execute_run_cmd ()
 	    run_test_prog "$TEST" no no;
 	done
 	run_test_report ;
+    elif test "$test_and_report" = "yes"; then
+	run_test_prog "$TEST_PROG"
+	run_test_report_single "$TEST_PROG"
     else
 	#run the test and display result on stdout
 	run_test_prog "$TEST_PROG" no yes ;
-	run_test_report_single "$TEST_PROG"
     fi
 }
 
